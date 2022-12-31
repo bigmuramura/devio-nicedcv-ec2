@@ -1,0 +1,172 @@
+{
+ "Resources": {
+  "SecurityGroupDD263621": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "NICE DCV Security Group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow NICE DCV Access",
+      "FromPort": 8443,
+      "IpProtocol": "tcp",
+      "ToPort": 8443
+     }
+    ],
+    "VpcId": "vpc-054b8c5b1c1012441"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkNicedcvEc2Stack/SecurityGroup/Resource"
+   }
+  },
+  "devlicenceroleD7AD65F7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "Licensing the NICE DCV",
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonSSMManagedInstanceCore"
+       ]
+      ]
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": "s3:GetObject",
+         "Effect": "Allow",
+         "Resource": "arn:aws:s3:::dcv-license.ap-northeast-1/*"
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "niceLicensePolicy"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkNicedcvEc2Stack/dev-licence-role/Resource"
+   }
+  },
+  "nicedcvInstanceProfile1B4951E2": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "devlicenceroleD7AD65F7"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkNicedcvEc2Stack/nice-dcv/InstanceProfile"
+   }
+  },
+  "nicedcv20ED94BB": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-1a",
+    "IamInstanceProfile": {
+     "Ref": "nicedcvInstanceProfile1B4951E2"
+    },
+    "ImageId": "ami-0cf3cd949d1122c35",
+    "InstanceType": "t3.large",
+    "KeyName": "sandbox-key",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "SecurityGroupDD263621",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": "subnet-035be95eeaa091603",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "CdkNicedcvEc2Stack/nice-dcv"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "#!/bin/bash"
+    }
+   },
+   "DependsOn": [
+    "devlicenceroleD7AD65F7"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CdkNicedcvEc2Stack/nice-dcv/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1XNTQrCMBAF4LN0n4y23ejahbiTeACJ6RSmTZOSH0VC7m6oZuHqDe/jMR30B2gb+fJcDTPX9IB0C1LNTKC30Slkxe4JVVcAVXQU3mdn48pOo/kvLsYHacqiSL0zI7lAElZvdc3KV2dH0pjzhr+PmRk7IEx+92yP0MO+mTwRd9EEWhDENz+HYMiVugAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkNicedcvEc2Stack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

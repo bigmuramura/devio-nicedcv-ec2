@@ -1,0 +1,119 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CdkNicedcvEc2Stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkNicedcvEc2Stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkNicedcvEc2Stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://060238338506/ap-northeast-1",
+      "properties": {
+        "templateFile": "CdkNicedcvEc2Stack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::060238338506:role/cdk-hnb659fds-deploy-role-060238338506-ap-northeast-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::060238338506:role/cdk-hnb659fds-cfn-exec-role-060238338506-ap-northeast-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-060238338506-ap-northeast-1/2f686df179a22e23d76cfb3ffbbf7a9a6e823a9bb55b8fa4a9cdc30e6f72ed12.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkNicedcvEc2Stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::060238338506:role/cdk-hnb659fds-lookup-role-060238338506-ap-northeast-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkNicedcvEc2Stack.assets"
+      ],
+      "metadata": {
+        "/CdkNicedcvEc2Stack/subnet-035be95eeaa091603": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "No routeTableId was provided to the subnet 'subnet-035be95eeaa091603'. Attempting to read its .routeTable.routeTableId will return null/undefined. (More info: https://github.com/aws/aws-cdk/pull/3171)",
+            "trace": [
+              "Annotations.addMessage (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addWarning (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/aws-cdk-lib/core/lib/annotations.js:1:600)",
+              "new ImportedSubnet (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/aws-cdk-lib/aws-ec2/lib/vpc.js:1:27512)",
+              "Function.fromSubnetAttributes (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/aws-cdk-lib/aws-ec2/lib/vpc.js:1:18272)",
+              "new CdkNicedcvEc2Stack (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/lib/cdk-nicedcv-ec2-stack.ts:26:20)",
+              "Object.<anonymous> (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/bin/cdk-nicedcv-ec2.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1218:14)",
+              "Module.m._compile (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/ts-node/src/index.ts:1618:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1272:10)",
+              "Object.require.extensions.<computed> [as .ts] (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/ts-node/src/index.ts:1621:12)",
+              "Module.load (node:internal/modules/cjs/loader:1081:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:922:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:82:12)",
+              "phase4 (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/ts-node/src/bin.ts:649:14)",
+              "bootstrap (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/ts-node/src/bin.ts:95:10)",
+              "main (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/ts-node/src/bin.ts:55:10)",
+              "Object.<anonymous> (/Users/ohmura.yasutaka/github/bigmuramra/cdk-nicedcv-ec2/node_modules/ts-node/src/bin.ts:800:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1218:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1272:10)",
+              "Module.load (node:internal/modules/cjs/loader:1081:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:922:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:82:12)",
+              "node:internal/main/run_main_module:23:47"
+            ]
+          }
+        ],
+        "/CdkNicedcvEc2Stack/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SecurityGroupDD263621"
+          }
+        ],
+        "/CdkNicedcvEc2Stack/dev-licence-role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "devlicenceroleD7AD65F7"
+          }
+        ],
+        "/CdkNicedcvEc2Stack/nice-dcv/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "nicedcvInstanceProfile1B4951E2"
+          }
+        ],
+        "/CdkNicedcvEc2Stack/nice-dcv/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "nicedcv20ED94BB"
+          }
+        ],
+        "/CdkNicedcvEc2Stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkNicedcvEc2Stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkNicedcvEc2Stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkNicedcvEc2Stack"
+    }
+  }
+}
